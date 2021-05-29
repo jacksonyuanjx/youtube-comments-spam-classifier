@@ -20,12 +20,15 @@ def predict():
 
     try:
         comments = [[comment] for comment in request.json]
-        comments_df = pd.DataFrame(data=comments, columns=['CONTENT'])
-        comments_tfidf = LOCAL_CACHE["tfidf_vectorizer"].transform(comments_df['CONTENT'])
+        if (len(comments) > 0):
+            comments_df = pd.DataFrame(data=comments, columns=['CONTENT'])
+            comments_tfidf = LOCAL_CACHE["tfidf_vectorizer"].transform(comments_df['CONTENT'])
 
-        predictions = LOCAL_CACHE["loaded_model"].predict(comments_tfidf)
+            predictions = LOCAL_CACHE["loaded_model"].predict(comments_tfidf).tolist()
+        else:
+            predictions = []
 
-        return jsonify(predictions=predictions.tolist()), 200
+        return jsonify(predictions=predictions), 200
     except Exception as e:
         print(e)
         return jsonify(error=e), 400
