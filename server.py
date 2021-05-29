@@ -20,4 +20,4 @@ def home():
 # handling when app is run from cmd line
 if __name__ == '__main__':
     print("running from cmd line")
-    app.run(port=5000, debug=True)
+    app.run(port=5000)
