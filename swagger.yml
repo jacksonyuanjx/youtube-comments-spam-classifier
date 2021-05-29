@@ -1,0 +1,54 @@
+swagger: "2.0"
+info:
+  description: The swagger file for the API
+  version: "1.0.0"
+  title: The API
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# connexion is using OpenAPI 2.x or lower so use `defintions` field instead of `components/Schemas`
+definitions:
+  PredictRequestBody:
+    type: array
+    items:
+      type: string
+      description: "YouTube comment to classify"
+      example: "sample comment here"
+
+# Paths supported by the API
+paths:
+  /predict:
+    post:
+      operationId: "spam_classifier.predict"
+      tags:
+        - "spam_classifier"
+      summary: "YouTube Comments Spam Classifier Prediction Endpoint"
+      description: "Generate spam/ham predictions based on input comments."
+      parameters:
+        - in: body
+          name: body
+          description: "Required array of string comments in the request payload."
+          required: true
+          schema:
+            $ref: "#/definitions/PredictRequestBody"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: array
+            items:
+              type: integer
+              description: integer value indicating spam or ham (where spam = 1 and ham = 0)
+              example: 1
+        400:
+          description: "Prediction failed"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "prediction failed :("
