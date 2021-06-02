@@ -31,4 +31,4 @@ def predict():
         return jsonify(predictions=predictions), 200
     except Exception as e:
         print(e)
-        return jsonify(error=e), 400
+        return jsonify(message=e), 400
