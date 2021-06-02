@@ -8,7 +8,7 @@ LOCAL_CACHE = {}
 def predict():
     """
     Handler for the /api/predict endpoint that loads the trained model and generates
-    predictions on the comments in the request body.
+    predictions on the comments passed in the request body.
     """
 
     if ("loaded_model" not in LOCAL_CACHE or "tfidf_vectorizer" not in LOCAL_CACHE):
